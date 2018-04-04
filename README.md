@@ -1,4 +1,4 @@
-생활 코딩 WEB2 Python
+생활 코딩 WEB2 - Python
 ===========================
 <https://opentutorials.org/module/3357>
 ---------------------------------------
