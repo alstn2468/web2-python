@@ -4,18 +4,20 @@ print()
 
 import cgi, os
 
-files = os.listdir('data')
-listStr = ''
-for item in files:
-    listStr = listStr + '<li><a href="index.py?id={name}">{name}</a></li>'.format(name=item)
+def getList():
+    files=os.listdir('data')
+    listStr=''
+    for item in files:
+        listStr=listStr + '<li><a href="index.py?id={name}">{name}</a></li>'.format(name=item)
+    return listStr
 
-form = cgi.FieldStorage()
+form=cgi.FieldStorage()
 if 'id' in form:
-    pageId = form["id"].value
-    description = open('data/'+pageId, 'r').read()
+    pageId=form["id"].value
+    description=open('data/'+pageId, 'r').read()
 else:
-    pageId = 'Welcome'
-    description = 'Hello, web'
+    pageId='Welcome'
+    description='Hello, web'
 print('''<!doctype html>
 <html>
 <head>
@@ -35,4 +37,4 @@ print('''<!doctype html>
   </form>
 </body>
 </html>
-'''.format(title=pageId, desc=description, listStr=listStr))
+'''.format(title=pageId, desc=description, listStr=getList()))
