@@ -1,16 +1,16 @@
-#!python
+#!C:\Users\Beginning\AppData\Local\Programs\Python\Python36-32\python.exe
 print("Content-Type: text/html")
 print()
 
 import cgi, os, view
 
-form=cgi.FieldStorage()
+form = cgi.FieldStorage()
 if 'id' in form:
-    pageId=form["id"].value
-    description=open('data/'+pageId, 'r').read()
+    pageId = form["id"].value
+    description = open('data/'+pageId, 'r').read()
 else:
-    pageId='Welcome'
-    description='Hello, web'
+    pageId = 'Welcome'
+    description = 'Hello, web'
 print('''<!doctype html>
 <html>
 <head>
@@ -30,4 +30,4 @@ print('''<!doctype html>
   </form>
 </body>
 </html>
-'''.format(title=pageId, desc=description, listStr=view.getList()))
+'''.format(title = pageId, desc = description, listStr = view.getList()))

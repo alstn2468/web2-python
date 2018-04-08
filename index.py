@@ -1,25 +1,31 @@
-#!python
+#!C:\Users\Beginning\AppData\Local\Programs\Python\Python36-32\python.exe
 print("Content-Type: text/html")
 print()
 
-import cgi, os, view
+import cgi, os, view, html_sanitizer
+
+sanitizer = html_sanitizer.Sanitizer()
 
 form = cgi.FieldStorage()
 if 'id' in form:
-    pageId=form["id"].value
-    description=open('data/'+pageId, 'r').read()
-    update_link='<a href="update.py?id={}">update</a>'.format(pageId)
-    delete_action='''
+    title = pageId = form["id"].value
+    description = open('data/'+pageId, 'r').read()
+    # description = description.replace('<', '&lt;')
+    # description = description.replace('>', '&gt;')
+    title = sanitizer.sanitize(title)
+    description = sanitizer.sanitize(description)
+    update_link = '<a href="update.py?id={}">update</a>'.format(pageId)
+    delete_action = '''
         <form action="process_delete.py" method="post">
             <input type="hidden" name="pageId" value="{}">
             <input type="submit" value="delete">
         </form>
     '''.format(pageId)
 else:
-    pageId='Welcome'
-    description='Hello, web'
-    update_link=''
-    delete_action=''
+    title = pageId = 'Welcome'
+    description = 'Hello, web'
+    update_link = ''
+    delete_action = ''
 print('''<!doctype html>
 <html>
 <head>
@@ -39,8 +45,8 @@ print('''<!doctype html>
 </body>
 </html>
 '''.format(
-    title=pageId,
-    desc=description,
-    listStr=view.getList(),
-    update_link=update_link,
-    delete_action=delete_action))
+    title = title,
+    desc = description,
+    listStr = view.getList(),
+    update_link = update_link,
+    delete_action = delete_action))
